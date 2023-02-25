@@ -1,51 +1,47 @@
-const hole = document.querySelectorAll("hole");
-const score = document.querySelector("score");
-const diglett = document.querySelectorAll("diglett");
-const time = document.querySelectorAll("time");
-const startGame = document.querySelectorAll("startGame");
-const game = document.querySelectorAll("game");
+const holes = document.querySelectorAll('.hole');
+  const scoreBoard = document.querySelector('.score');
+  const moles = document.querySelectorAll('.mole');
+  let lastHole;
+  let timeUp = false;
+  let score = 0;
 
-let points = 0;
-let timeLeft = 60;
-let i;
+  function randomTime(min, max) { 
+    return Math.round(Math.random() * (max - min) + min);
+  }
 
-startGame.onclick = () => {
-    diglett.style.display = "none";
-};
+  function randomHole(holes) {
+    const idx = Math.floor(Math.random() * holes.length);
+    const hole = holes[idx];
+    if (hole === lastHole) {
+      return randomHole(holes);
+    }
+    lastHole = hole;
+    return hole;
+  }
 
-const Randomdiglett = (minimum, maximum) => {
-  const mydiglett = Math.floor(
-    Math.random() * (maximum - minimum + 1 + minimum)
-  );
-  
-};
+  function peep() {
+    const time = randomTime(200, 1000);
+    const hole = randomHole(holes);
+    hole.classList.add('up');
+    setTimeout(() => {
+      hole.classList.remove('up');
+      if (!timeUp) peep();
+    }, time);
+  }
 
-const diglettFunction = () => {
-  i = Randomdiglett(0, 8);
-  diglett[i].style.display = "block";
-  diglett[i].style.animation = `diglettIn 300ms forwards`;
-};
+  function startGame() {
+    scoreBoard.textContent = 0;
+    timeUp = false;
+    score = 0;
+    peep();
+    setTimeout(() => timeUp = true, 10000)
+  }
 
-function run() {
-  diglettFunction();
-  setInterval(() => {
-    diglett[i].style.animation = `diglettOut 300ms forwards`;
+  function whack(e) {
+    if(!e.isTrusted) return; 
+    score++;
+    this.parentNode.classList.remove('up');
+    scoreBoard.textContent = score;
+  }
 
-    diglettFunction();
-  }, 1000);
-}
-
-[...diglett].forEach((diglett) => {
-  diglett.onclick = () => {
-    diglett.style.animation = `diglettOut 300ms forwards`;
-    score.innerText = points;
-  };
-});
-
-startGame.onclick = () => {
-  const timer = setInterval(() => {
-    timeLeft--;
-    time.innerText = timeLeft;
-  }, 1000);
-  run();
-};
+  moles.forEach(mole => mole.addEventListener('click', whack));
