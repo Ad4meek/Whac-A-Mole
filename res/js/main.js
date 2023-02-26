@@ -17,8 +17,8 @@ start.onclick = () => {
 }
 
 function randomHole(holes) {
-  const idx = randomNumber(0, 8);
-  const hole = holes[idx];
+  const i = randomNumber(0, 8);
+  const hole = holes[i];
   if (hole === lastHole) {
     return randomHole(holes);
   }
