@@ -18,6 +18,12 @@ body {
   font-family: 'Shadows Into Light', cursive;
 }
 
+.score {
+  text-align: center;
+  font-size: 5rem;
+  margin-bottom: 0;
+}
+
 .start{
   text-align: center;
 }
