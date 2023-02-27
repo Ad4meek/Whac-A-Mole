@@ -14,7 +14,7 @@ const randomNumber = (min, max) => {
 
 start.onclick = () => {
   startGame();
-}
+};
 
 function randomHole(holes) {
   const i = randomNumber(0, 8);
