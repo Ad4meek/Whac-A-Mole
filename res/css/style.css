@@ -30,6 +30,7 @@ main {
 .hole {
   overflow: hidden;
   position: relative;
+  border-bottom: 2px solid black;
 }
 
 .hole:after {
@@ -54,7 +55,7 @@ main {
   transition: all 0.4s ease;
 }
 
-.hole.up .mole {
+.up .mole {
   top: 0;
 }
 

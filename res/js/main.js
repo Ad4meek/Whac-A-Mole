@@ -13,10 +13,16 @@ const randomNumber = (min, max) => {
 };
 
 start.onclick = () => {
-  startGame();
+  if (ended === false) {
+    ended = true;
+    scoreBoard.innerText = 0;
+    timeUp = false;
+    score = 0;
+    diglett();
+  }
 };
 
-function randomHole(holes) {
+const randomHole = (holes) => {
   const i = randomNumber(0, 8);
   const hole = holes[i];
   if (hole === lastHole) {
@@ -26,34 +32,21 @@ function randomHole(holes) {
   return hole;
 }
 
-function peep() {
-  const time = 1000;
+const diglett = () => {
   const hole = randomHole(holes);
   hole.classList.add("up");
   setTimeout(() => {
     hole.classList.remove("up");
-    if (!timeUp) peep();
-  }, time);
+    if (timeUp === false) {
+      diglett()
+    };
+  }, 500);
 }
 
-function startGame() {
-  if (ended === false) {
-    ended = true;
-    scoreBoard.innerText = 0;
-    timeUp = false;
-    score = 0;
-    peep();
-    setTimeout(() => {
-      timeUp = true;
-      ended = false;
-    }, 10000);
-  }
-}
-
-function whack() {
+function hit() {
   score++;
   this.parentNode.classList.remove("up");
   scoreBoard.innerText = score;
 }
 
-[...moles].forEach((mole) => (mole.onclick = whack));
+[...moles].forEach((mole) => (mole.onclick = hit));
