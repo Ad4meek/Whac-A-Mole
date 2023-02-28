@@ -4,7 +4,6 @@ const scoreBoard = document.getElementById("score");
 const moles = document.getElementsByClassName("mole");
 
 let lastHole;
-let timeUp = false;
 let score = 0;
 let ended = false;
 
@@ -16,7 +15,6 @@ start.onclick = () => {
   if (ended === false) {
     ended = true;
     scoreBoard.innerText = 0;
-    timeUp = false;
     score = 0;
     diglett();
   }
@@ -37,15 +35,13 @@ const diglett = () => {
   hole.classList.add("up");
   setTimeout(() => {
     hole.classList.remove("up");
-    if (timeUp === false) {
-      diglett()
-    };
+    diglett();
   }, 500);
 }
 
-function hit() {
+const hit = (e) => {
   score++;
-  this.parentNode.classList.remove("up");
+  e.target.parentNode.classList.remove("up");
   scoreBoard.innerText = score;
 }
 
