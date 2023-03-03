@@ -36,7 +36,7 @@ const diglett = () => {
   setTimeout(() => {
     hole.classList.remove("up");
     diglett();
-  }, 500);
+  }, 700);
 }
 
 const hit = (e) => {
